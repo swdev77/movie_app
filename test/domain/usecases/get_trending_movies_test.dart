@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:movie_app/domain/entities/movie.dart';
-import 'package:movie_app/domain/repositories/movie_repository.dart';
 import 'package:movie_app/domain/usecases/get_trending_movies.dart';
 
-class MockMovieRepository extends Mock implements MovieRepository {}
+import 'helper.dart';
+import 'mock_movie_repository.dart';
 
 void main() {
   late GetTrendingMovies usecases;
@@ -15,10 +15,7 @@ void main() {
     usecases = GetTrendingMovies(mockMovieRepository);
   });
 
-  final moviesList = [
-    Movie(),
-    Movie(),
-  ];
+  final moviesList = Movies.list;
 
   test('should get trending movies from the repository', () async {
     // arrange
