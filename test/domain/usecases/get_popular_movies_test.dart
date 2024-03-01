@@ -11,7 +11,7 @@ void main() {
 
   final moviesList = Movies.list;
 
-  test('Get popular movies list', () async {
+  test('should get popular movies list', () async {
     // arrange
     when(() => mockMovieRepository.getPopularMovies())
         .thenAnswer((_) async => moviesList);
