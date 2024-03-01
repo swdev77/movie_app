@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:movie_app/domain/entities/movie.dart';
 import 'package:movie_app/domain/usecases/get_trending_movies.dart';
 
 import 'helper.dart';
