@@ -15,7 +15,7 @@ void main() {
 
   test('should get movies from the query', () async {
     // arrange
-    when(() => mockMovieRepository.searchMovies('search movie'))
+    when(() => mockMovieRepository.searchMovies(searchQuery))
         .thenAnswer((_) async => moviesList);
     // act
     final result = await usecases.execute(searchQuery);
