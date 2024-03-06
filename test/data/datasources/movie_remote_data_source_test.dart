@@ -8,11 +8,18 @@ import 'package:movie_app/core/constants.dart';
 class MockHttpClient extends Mock implements http.Client {}
 
 void main() {
+  final trendingMoviesUrl =
+      Uri.parse('$baseUrl/trending/movie/day?api_key=$apiKey');
+  final popularMoviesUrl =
+      Uri.parse('$baseUrl/popular/movie/day?api_key=$apiKey');
+
   final mockHttpClient = MockHttpClient();
   final dataSource = MovieRemoteDataSourceImpl(client: mockHttpClient);
 
-  final trendingMoviesUrl =
-      Uri.parse('$baseUrl/trending/movie/day?api_key=$apiKey');
+  setUp(() {
+    // mockHttpClient = MockHttpClient();
+    // dataSource = MovieRemoteDataSourceImpl(client: mockHttpClient);
+  });
 
   test(
     'should perform a GET request on a url to get trending movies',
@@ -26,6 +33,40 @@ void main() {
 
       // assert
       verify(() => mockHttpClient.get(trendingMoviesUrl)).called(1);
+    },
+  );
+
+  test(
+    'should perform a GET request on a url to get popular movies',
+    () async {
+      // arrange
+      when(() => mockHttpClient.get(popularMoviesUrl))
+          .thenAnswer((_) async => http.Response('{"results": []}', 200));
+
+      // act
+      await dataSource.getPopularMovies();
+
+      // assert
+      verify(() => mockHttpClient.get(popularMoviesUrl)).called(1);
+    },
+  );
+
+  test(
+    'should perform a GET request on a url to search movies',
+    () async {
+      // arrange
+      const query = 'spiderman';
+      final searchMoviesUrl =
+          Uri.parse('$baseUrl/search/movie?query=$query&api_key=$apiKey');
+
+      when(() => mockHttpClient.get(searchMoviesUrl))
+          .thenAnswer((_) async => http.Response('{"results": []}', 200));
+
+      // act
+      await dataSource.searchMovies(query);
+
+      // assert
+      verify(() => mockHttpClient.get(searchMoviesUrl)).called(1);
     },
   );
 
