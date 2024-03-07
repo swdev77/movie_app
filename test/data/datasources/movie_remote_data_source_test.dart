@@ -8,23 +8,20 @@ import 'package:movie_app/core/constants.dart';
 class MockHttpClient extends Mock implements http.Client {}
 
 void main() {
-  final trendingMoviesUrl =
-      Uri.parse('$baseUrl/trending/movie/day?api_key=$apiKey');
-  final popularMoviesUrl =
-      Uri.parse('$baseUrl/popular/movie/day?api_key=$apiKey');
-
-  final mockHttpClient = MockHttpClient();
-  final dataSource = MovieRemoteDataSourceImpl(client: mockHttpClient);
+  late MockHttpClient mockHttpClient;
+  late MovieRemoteDataSourceImpl dataSource;
 
   setUp(() {
-    // mockHttpClient = MockHttpClient();
-    // dataSource = MovieRemoteDataSourceImpl(client: mockHttpClient);
+    mockHttpClient = MockHttpClient();
+    dataSource = MovieRemoteDataSourceImpl(client: mockHttpClient);
   });
 
   test(
     'should perform a GET request on a url to get trending movies',
     () async {
       // arrange
+      final trendingMoviesUrl =
+          Uri.parse('$baseUrl/trending/movie/day?api_key=$apiKey');
       when(() => mockHttpClient.get(trendingMoviesUrl))
           .thenAnswer((_) async => http.Response('{"results": []}', 200));
 
@@ -40,6 +37,9 @@ void main() {
     'should perform a GET request on a url to get popular movies',
     () async {
       // arrange
+      final popularMoviesUrl =
+          Uri.parse('$baseUrl/popular/movie/day?api_key=$apiKey');
+
       when(() => mockHttpClient.get(popularMoviesUrl))
           .thenAnswer((_) async => http.Response('{"results": []}', 200));
 
