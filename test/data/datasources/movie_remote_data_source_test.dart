@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
@@ -74,7 +76,7 @@ void main() {
     'should throw a ServerException when the response code is not 200',
     () {
       // arrange
-      when(() => mockHttpClient.get(trendingMoviesUrl))
+      when(() => mockHttpClient.get(Uri.parse(any())))
           .thenAnswer((_) async => http.Response('Something went wrong', 500));
 
       final call = dataSource.getTrendingMovies;
