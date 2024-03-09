@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:movie_app/domain/usecases/get_trending_movies.dart';
 
-import 'helper.dart';
+import '../../helper.dart';
 import 'mock_movie_repository.dart';
 
 void main() {

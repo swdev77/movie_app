@@ -74,12 +74,14 @@ void main() {
     'should throw a ServerException when the response code is not 200',
     () {
       // arrange
-      when(() => mockHttpClient.get(Uri.parse(any())))
+      final trendingMoviesUrl =
+          Uri.parse('$baseUrl/trending/movie/day?api_key=$apiKey');
+      when(() => mockHttpClient.get(trendingMoviesUrl))
           .thenAnswer((_) async => http.Response('Something went wrong', 500));
 
       final call = dataSource.getTrendingMovies;
 
-      expect(() => call(), throwsA(isA<ServerException>()));
+      expect(() async => await call(), throwsA(isA<ServerException>()));
     },
   );
 }
